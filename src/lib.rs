@@ -2,11 +2,14 @@ use std::error::Error;
 use std::fs;
 use std::process;
 use colored::Colorize;
+
+//struct for config info
 pub struct Config {
     pub word_to_find: String,
     pub filename: String
 }
 
+//methods for config struct
 impl Config {
     pub fn new(args: &[String] ) -> Result<Config, &str> {
         if args.len() < 3 {
@@ -18,6 +21,7 @@ impl Config {
     }
 }
 
+//method to search case senitive and insensitive search
 fn search(word_to_find: &str, contents: &str, case_sensitive: bool) -> Result<(), Box<dyn Error>> {
     let mut result = Vec::new();
     for line in contents.split('.'){
@@ -37,6 +41,7 @@ fn search(word_to_find: &str, contents: &str, case_sensitive: bool) -> Result<()
     return Ok(());
 }
 
+//main function
 pub fn run(config : Config, case_sensitive: bool) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(&config.filename)?;
 
